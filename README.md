@@ -29,3 +29,28 @@ We provide the codes for Align-gram model and training. Our codes are based on t
 * align_gram_model.py : contains the model definition
 * model_builder.py : contains the codes for building, training and loading models.
 * utils.py : contains the healper functions
+
+
+## Tutorial
+
+You can train custom Align-Gram embedding based on your particular requirement. 
+
+All the steps involving model building and training is encapsulated in the ***buildModel*** function
+
+Just input the value of *k*, *embedding dimension*, and select suitable *substitution matrix* and *gap penalties* based on your need (note: gap penalties need to be negative because of biopython). Also, provide a *model_name* which will be the filename for the saved model.
+
+```
+from AlignGram.model_builder import buildModel
+
+model = buildModel(K, embedding_len, sub_mat, gap_open, gap_extend, model_name)
+```
+
+Next you can provide a protein sequence as input and compute it's embeddings
+
+```
+protein_seq = 'GIMHMEWLNISYIIHNQVFS'
+protein_emb = model.computeProteinEmbedding(protein_seq)
+```
+
+You can also use the ***get_model*** function to load your model later.
+
