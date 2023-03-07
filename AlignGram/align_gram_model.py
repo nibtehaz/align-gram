@@ -11,8 +11,8 @@ class AlignGram(object):
 
         Args:
             embedding_matrix (2D numpy array): The matrix containing the embedding vectors
-            vocabulary ([type]): [description]
-            vocabulary_mapper ([type]): [description]
+            vocabulary (list): the list of k-mers in the model
+            vocabulary_mapper (dict): mapping of k-mer to id
         """
 
         self.embedding_matrix = embedding_matrix
@@ -106,5 +106,27 @@ class AlignGram(object):
         """
 
         return self.embedding_matrix[self.vocabulary_mapper[kmer]]
+
+    def computeProteinEmbedding(self,protein_seq):
+        """
+        Compute the embedding for a protein sequence
+
+        Args:
+            protein_seq (str): input protein sequence
+
+        Returns:
+            [numpy array]: embedding of the protein sequence
+        """
+        
+        protein_emb = []
+        k = len(self.vocabulary[0])
+        
+        for i in range(len(protein_seq)-k):
+            try:
+                protein_emb.append(self.embedding_matrix[self.vocabulary_mapper[protein_seq[i:i+k]]])
+            except:
+                pass
+            
+        return np.array(protein_emb)
 
     
